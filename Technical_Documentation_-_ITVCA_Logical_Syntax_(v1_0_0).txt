@@ -1,0 +1,84 @@
+## Technical Documentation: ITVCA Logical Syntax (v1.0.0)
+
+This document provides the standardized logical notation for the **Interplanetary Treaty Verification & Conflict Analysis (ITVCA) Engine**. This syntax is designed to formalize legal rules, jurisdictional interactions, and agent intent across multiple planetary systems.
+
+---
+
+### I. The Core Logical Schema: The 9-Tuple
+
+All legal mandates and constraints are represented as a 9-tuple to ensure comprehensive analysis:
+
+`rule(ID, Actor_Domain, Deontic_Op, Action, Condition, Constraint, Liability_Domain, Epistemic_State, Intent_State)`
+
+#### Parameters Defined:
+
+1. **ID**: Unique identifier for the rule.
+2. **Actor_Domain**: `sovereign(Planet)`, `enterprise(Entity)`, or `individual(X)`.
+3. **Deontic_Op**: `obligatory (O)`, `permitted (P)`, or `forbidden (F)`.
+4. **Action**: The specific behavior ($\alpha$).
+5. **Condition**: The situational triggers (e.g., `crime(assault)`).
+6. **Constraint**: Operational limits (e.g., `time(48h)`, `jurisdiction(Aethelgard)`).
+7. **Liability_Domain**: `criminal`, `civil`, or `regulatory`.
+8. **Epistemic_State**: `K(phi)` (Knows rule) or `¬K(phi)` (Ignorant of rule).
+9. **Intent_State**: `I_mal` (Malicious), `I_ben` (Benign), or `I_corrupt` (System-subverting).
+
+---
+
+### II. Operators and Primitive Logic
+
+* **Conflict Representation**:
+
+$$Conflict(O_{J_1}(\alpha), F_{J_2}(\alpha)) \iff \text{True}$$
+
+
+* **Resolution Meta-Norms**:
+* `Superior(Treaty_ID) > Local(Planetary_Law)`
+* `Lex_Posterior(Newer) > Lex_Prior(Older)`
+
+
+* **Corruption Override**:
+* $I_{corrupt} \implies \text{Nullify}(Treaty\_Immunity)$
+
+
+
+---
+
+### III. Implementation Syntax (ProLog/Formal Logic)
+
+```prolog
+% Example Formalization: A sovereign rule vs a private entity rule
+% rule(ID, Actor, Op, Action, Condition, Constraint, Liability, Epistemic, Intent)
+
+rule(s1, sovereign(alpha), obligatory, arrest, [crime(assault)], time(24h), criminal, K(law), I_mal(assault)).
+
+rule(p1, enterprise(prime_estates), forbidden, disclose, [data(private)], none, civil, K(policy), I_ben(compliance)).
+
+% Conflict Check
+detect_deadlock(Action) :-
+    rule(_, sovereign(P), obligatory, Action, _, _, criminal, _, _),
+    rule(_, enterprise(E), forbidden, Action, _, _, civil, _, _).
+
+```
+
+---
+
+### IV. Procedural Library for ITVCA Operations
+
+| Procedure Name | Objective | Logic/Condition Applied |
+| --- | --- | --- |
+| **Formalization** | Map natural language to 9-tuple. | Rules must be parsed into tuple-slots. |
+| **Constraint-Check** | Validate status/temporal limits. | $T_{window}$ and $S_{diplomat}$ bypass $O/F$ operators. |
+| **Liability Mapping** | Determine which law prevails. | Criminal > Civil > Contractual. |
+| **Mens Rea Audit** | Evaluate legal culpability. | Intersection of $K(\phi)$ and $I(\phi)$. |
+
+---
+
+### V. Summary of Integrated Logic Addenda
+
+1. **Private Enterprise Layer**: Enterprise rules are treated as `enterprise(Entity)` actors, subject to `Liability_Domain` filtering (Criminal vs. Civil).
+2. **Epistemic Layer**: Liability is adjusted based on $K(\phi)$; ignorance $(\neg K)$ allows for `mitigation` or `warning` status in the logic engine.
+3. **Intent Layer**: $I_{corrupt}$ acts as a "Hard Override," automatically nullifying protections like `Treaty_Immunity` or `Corporate_Privilege` when detected.
+
+---
+
+> **Note to Administrators:** All rules must be validated against the **Universal Standardized Time (UST)** and **Joint Arbitration Protocol** prior to deployment in any multi-jurisdictional simulation. The ITVCA Engine assumes a hierarchy of `Criminal > Regulatory > Civil > Contractual` unless otherwise specified by a `Superior(Treaty_ID)` override.
