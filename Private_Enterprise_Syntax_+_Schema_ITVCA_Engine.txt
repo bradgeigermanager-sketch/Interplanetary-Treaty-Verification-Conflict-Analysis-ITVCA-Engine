@@ -1,0 +1,78 @@
+To bridge the gap between state-level sovereignty and private entity interactions, we must expand the ITVCA syntax to include **Privileged Entity (E)** and **Contractual Obligation (C)** layers.
+
+In a multi-planetary economy, private enterprises (like *Prime Estates, LLC*) and individuals often operate under "Corporate Lex-Mercatoria" (merchant law) that sits alongside planetary statutes.
+
+### 1. Expanded Syntax: The "Socio-Corporate" Layer
+
+We introduce new variables to the 7-tuple: `rule(ID, Jurisdiction/Entity, Operator, Action, Conditions, Constraints, Meta-Data)`.
+
+* **Entity Class ($E$):** Distinguishes between `Individual`, `Corporation`, or `State_Agent`.
+* **Contractual Obligation ($C$):** Links the action to a private contract that may override or supplement planetary law.
+* **Liability Domain ($L$):** Specifies if the action is `Civil`, `Criminal`, or `Regulatory`.
+
+#### Updated Formal Schema:
+
+`rule(ID, Actor_Domain, Operator, Action, Conditions, Constraint, Liability_Domain)`
+
+**Example:** A corporation’s internal policy regarding guest data privacy on a multi-planetary resort planet.
+
+```prolog
+% rule(ID, Actor, Op, Action, Condition, Constraint, Domain)
+rule(corp_policy_01, enterprise(prime_estates), forbidden, disclosure, [data_type(biometric)], none, civil).
+
+```
+
+---
+
+### 2. Logic Syntax for Private-Public Conflicts
+
+When a private entity’s operational rules conflict with state law, we use a **Conflict Resolution Operator ($\nabla$)**:
+
+$$Conflict(O_{State}(\alpha), P_{Corp}(\alpha)) \iff \nabla_{Liability}$$
+
+* If the state mandates data disclosure ($O_{State}$) but the corporation forbids it ($P_{Corp}$), the system evaluates the **Liability Domain** to determine if the corporation faces a criminal penalty (Sovereign override) or a civil breach of contract (Private override).
+
+---
+
+### 3. The "Entity-Status" Matrix
+
+| Category | Logical Identifier | Scope |
+| --- | --- | --- |
+| **Individual** | $E_{indiv}(status, domicile)$ | Subject to local/transient law. |
+| **Enterprise** | $E_{corp}(charter, origin)$ | Subject to corporate charter and planetary laws. |
+| **Contract** | $C_{oblig}(parties, term)$ | Enforceable agreements between entities. |
+
+---
+
+### 4. Procedure: The "Hierarchy-of-Nexus" Audit
+
+When an incident involves private entities (e.g., a crime within a managed hotel property), the ITVCA system executes the following:
+
+1. **Define Domain of Origin:** Categorize the actors as $E_{indiv}$ or $E_{corp}$.
+2. **Contractual Check:** Query the $C_{oblig}$ database to see if a private contract (e.g., Guest Service Agreement) mandates a specific response (e.g., "Must notify Planet Alpha Security before local police").
+3. **Liability Weighting:**
+* If `Domain == Criminal`: Sovereign law $O$ > Corporate policy $P$.
+* If `Domain == Civil`: Contractual obligation $C$ > Standard statutory permission.
+
+
+4. **Conflict flagging:** Highlight the "Compliance Gap" where the entity must violate either their contract or the planetary law.
+
+---
+
+### 5. Automated "Operational Logic" Template
+
+```prolog
+% Logical check for Private Enterprise vs. Sovereign Law
+resolve_compliance(Incident, Action) :-
+    rule(_, sovereign(P1), obligatory, Action, Cond, _, criminal),
+    rule(_, enterprise(Corp), forbidden, Action, Cond, _, civil),
+    notify_user(compliance_gap(P1, Corp, Action)).
+
+```
+
+---
+
+### 6. Integration: The "Procedure Library" Update
+
+* **Procedure [Liability-Domain Mapping]:** Always categorize rules by `Liability_Domain` (Criminal vs. Civil). This determines which branch of the logic tree controls the outcome.
+* **Procedure [Charter-Check]:** For private enterprise, always import the corporate charter/contractual terms as a secondary rule-set before testing against the Sovereign treaty set.
