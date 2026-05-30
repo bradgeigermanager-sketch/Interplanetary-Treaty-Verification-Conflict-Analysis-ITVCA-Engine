@@ -1,0 +1,86 @@
+To facilitate the **Interplanetary Treaty Verification & Conflict Analysis (ITVCA) Engine**, we must utilize a formal language that accounts for the "defeasible" nature of law (where rules have exceptions and priorities).
+
+Below is a generalized logical syntax based on **Defeasible Deontic Logic (DDL)**, specifically designed for jurisdictional conflict resolution.
+
+---
+
+### 1. Fundamental Syntax Structure
+
+The system relies on predicates that define actors ($A$), actions ($\alpha$), and jurisdictions ($J$).
+
+* **Deontic Operators:**
+* $O(\alpha)$: Action $\alpha$ is Obligatory.
+* $P(\alpha)$: Action $\alpha$ is Permitted.
+* $F(\alpha)$: Action $\alpha$ is Forbidden.
+
+
+* **Jurisdictional Context:**
+* $J_x(\phi)$: The proposition $\phi$ holds true within the legal framework of planet $x$.
+
+
+
+### 2. The Rule Schema
+
+Rules are expressed as: `[Rule_ID] : Premise -> Conclusion`
+
+* **Basic Rule:** `Jurisdiction(Planet_A) AND Crime(Assault) -> O(Arrest)`
+* **Defeasible Rule (Exception):** `Jurisdiction(Planet_A) AND Crime(Assault) AND Diplomatic_Immunity -> F(Arrest)`
+
+### 3. Syntax for Conflict Representation
+
+To identify conflicts, the system uses "Conflict Primitives."
+
+**Logical Conflict Syntax:**
+
+
+$$Conflict(O_{J_1}(\alpha), F_{J_2}(\alpha)) \iff \text{True}$$
+
+
+*This signifies a jurisdictional deadlock where Planet 1 mandates action $\alpha$ while Planet 2 forbids the same action.*
+
+---
+
+### 4. Implementation Template (Pseudo-Code for Logic Engine)
+
+You can use this syntax to load rules into the engine:
+
+```prolog
+% Syntax: rule(ID, Jurisdiction, Deontic_Operator, Action, Conditions).
+
+% Planet Alpha's Law: Mandatory arrest for theft.
+rule(a1, alpha, obligatory, arrest, [crime(theft)]).
+
+% Planet Beta's Law: Prohibition of foreign police power on their soil.
+rule(b1, beta, forbidden, arrest, [location(beta_territory)]).
+
+% Conflict Logic:
+detect_deadlock(A, J1, J2) :-
+    rule(ID1, J1, obligatory, A, Cond1),
+    rule(ID2, J2, forbidden, A, Cond2),
+    shared_context(Cond1, Cond2).
+
+```
+
+---
+
+### 5. Meta-Norm Hierarchy (The Resolution Arbiter)
+
+The system requires an ordering protocol to resolve these conflicts. We use the syntax `Precedence(J_x > J_y)` to denote hierarchical authority.
+
+* **Syntax for Treaty Priority:**
+* `Superior(Treaty_ID) > Local(Planetary_Law)`
+* `Lex_Posterior(Newer_Treaty) > Lex_Prior(Older_Treaty)`
+
+
+
+---
+
+### 6. Procedural Library: Logic Integration
+
+To add this to your library of procedures, store the following as your **"Formalization Protocol"**:
+
+1. **Extraction:** Identify the core mandate (O/P/F) and the scope (Jurisdiction).
+2. **Mapping:** Convert clauses into the `rule(ID, J, Op, Action, Cond)` format.
+3. **Boundary Definition:** Define the `location` or `nexus` variables for the rule.
+4. **Consistency Check:** Run the `detect_deadlock` function across all loaded rule-sets.
+5. **Hierarchy Assignment:** Apply `Precedence` tags based on treaty status to resolve identified deadlocks.
